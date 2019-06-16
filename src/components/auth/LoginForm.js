@@ -5,8 +5,11 @@ const LoginForm = ({username, password, onChange, onSubmit, saving, errors}) =>{
   return (
     <form onSubmit={onSubmit}>
       <h1>ورود</h1>
-      <TextInput name="username" label="نام کاربری" value={username} onChange={onChange} />
-      <TextInput name="password" label="رمز عبور" value={password} onChange={onChange} type="password" />
+      { errors && errors.summary &&
+        <div className="alert alert-danger">{errors.summary}</div>
+      }
+      <TextInput name="username" label="نام کاربری" value={username} onChange={onChange} error={errors.username} />
+      <TextInput name="password" label="رمز عبور" value={password} onChange={onChange} error={errors.password} type="password" />
       <input
         type="submit"
         className="btn btn-primary"
@@ -23,6 +26,6 @@ LoginForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   saving: PropTypes.bool,
   errors: PropTypes.object
-}
+};
 
 export default LoginForm;

@@ -14,7 +14,9 @@ class LoginPage extends React.Component {
 
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      errors: {},
+      saving: false
     };
   }
 
@@ -23,21 +25,45 @@ class LoginPage extends React.Component {
     this.setState({[name]:value});
   }
 
+  validateForm(){
+    let errors = {},
+        formIsValid = true;
+
+    if (!this.state.username) {
+      errors.username = "ورود مقدار الزامی است";
+      formIsValid = false;
+    }
+    if (!this.state.password) {
+      errors.password = "ورود مقدار الزامی است";
+      formIsValid = false;
+    }
+
+    this.setState({errors});
+    return formIsValid;
+  }
+
   onSubmit(event){
     event.preventDefault();
+
+    if (!this.validateForm())
+      return;
+
+    this.setState({saving: true});
     this.props.actions.login(this.state.username, this.state.password)
       .then(()=> browserHistory.push("/"))
-      .catch(error => console.log(error));
+      .catch(error => {
+        this.setState({saving: false, errors: {summary: error.message}});
+      });
   }
 
   render(){
     const {loggedIn} = this.props;
-    const {username, password} = this.state;
+    const {username, password, saving, errors} = this.state;
 
     return (
       <div>
         {loggedIn && <h2>loggedIn</h2>}
-        <LoginForm username={username} password={password} 
+        <LoginForm username={username} password={password} saving={saving} errors={errors}
           onChange={this.onChange} onSubmit={this.onSubmit} />
       </div>
     );
@@ -50,7 +76,7 @@ LoginPage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  const {loggedIn} = state.auth;
+  const {loggedIn} = state.user;
   return{
     loggedIn
   };

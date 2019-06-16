@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
-import auth from './AuthenticationReducer';
+import user from './AuthenticationReducer';
+import activeAjaxCalls from './ajaxStatusReducer';
 
 const rootReducer = combineReducers({
-  auth
+  user,
+  activeAjaxCalls
 });
 
 export default rootReducer;
