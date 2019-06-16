@@ -5,7 +5,7 @@ const LoginForm = ({username, password, onChange, onSubmit, saving, errors}) =>{
   return (
     <form onSubmit={onSubmit}>
       <h1>ورود</h1>
-      { errors && errors.summary &&
+      {errors && errors.summary &&
         <div className="alert alert-danger">{errors.summary}</div>
       }
       <TextInput name="username" label="نام کاربری" value={username} onChange={onChange} error={errors.username} />
