@@ -1,20 +1,21 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Header from "./common/Header";
 import {connect} from "react-redux";
+import routes from '../routes';
 
 class App extends React.Component {
   render() {
     return (
       <div className="container-fluid">
         <Header loading={this.props.loading} />
-        {this.props.children}
+        {routes}
       </div>
     );
   }
 }
 
 App.propTypes = {
-  children: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired
 };
 

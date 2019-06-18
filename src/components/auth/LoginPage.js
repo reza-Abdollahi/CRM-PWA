@@ -1,9 +1,9 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as authActions from '../../actions/authActions';
 import LoginForm from './LoginForm';
-import {browserHistory} from 'react-router';
 
 class LoginPage extends React.Component {
   constructor(props, context) {
@@ -50,7 +50,7 @@ class LoginPage extends React.Component {
 
     this.setState({saving: true});
     this.props.actions.login(this.state.username, this.state.password)
-      .then(()=> browserHistory.push("/"))
+      .then(()=> this.props.history.push("/"))
       .catch(error => {
         this.setState({saving: false, errors: {summary: error.message}});
       });
@@ -72,6 +72,7 @@ class LoginPage extends React.Component {
 
 LoginPage.propTypes = {
   actions: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   loggedIn: PropTypes.bool
 };
 
