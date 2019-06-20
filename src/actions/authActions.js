@@ -3,7 +3,10 @@ import authApi from '../api/mockAuthApi';
 import {beginAjaxCall, ajaxCallError} from './ajaxStatusActions';
 
 export function success(user) { return { type: types.LOGIN_SUCCESS, user }; }
-export function logout() { return { type: types.LOGOUT }; }
+export function logout() {
+  authApi.logout();
+  return { type: types.LOGOUT };
+}
 
 export function login(username, password) {
   return dispatch => {

@@ -1,4 +1,5 @@
 import delay from './delay';
+import {saveUserState, removeUserState} from '../helpers/persistentState';
 
 class AuthApi {
 
@@ -7,6 +8,7 @@ class AuthApi {
       setTimeout(()=>{
         if (username && password) {
           if (username === 'test' && password === '123') {
+            saveUserState({username, Token:'test'});
             resolve({username});
           }else {
             reject(new Error('wrong credentials'));
@@ -16,6 +18,10 @@ class AuthApi {
         }
       }, delay);
     });
+  }
+
+  static logout(){
+    removeUserState();
   }
 
 }

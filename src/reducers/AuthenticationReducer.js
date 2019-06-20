@@ -5,8 +5,8 @@ export default function AuthenticationReducer(state = initialState.user, action)
   switch (action.type) {
     case types.LOGIN_SUCCESS:
       return {
-        loggedIn: true,
-        user: action.user
+        isLoggedIn: true,
+        profile: {...action.user}
       };
     case types.LOGOUT:
       return {};
