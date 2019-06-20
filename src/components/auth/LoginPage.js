@@ -57,12 +57,10 @@ class LoginPage extends React.Component {
   }
 
   render(){
-    const {loggedIn} = this.props;
     const {username, password, saving, errors} = this.state;
 
     return (
-      <div>
-        {loggedIn && <h2>loggedIn</h2>}
+      <div className="container-fluid">
         <LoginForm username={username} password={password} saving={saving} errors={errors}
           onChange={this.onChange} onSubmit={this.onSubmit} />
       </div>
@@ -73,13 +71,10 @@ class LoginPage extends React.Component {
 LoginPage.propTypes = {
   actions: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  loggedIn: PropTypes.bool
 };
 
 function mapStateToProps(state, ownProps) {
-  const {loggedIn} = state.user;
   return{
-    loggedIn
   };
 }
 
