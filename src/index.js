@@ -9,6 +9,11 @@ import LoginPage from './components/auth/LoginPage';
 import './styles/styles.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
+if (process.env.NODE_ENV !== 'production') {
+  const {mockBackendApi} = require('./helpers/mockApi');
+  mockBackendApi();
+}
+
 const store = configureStore();
 
 render(

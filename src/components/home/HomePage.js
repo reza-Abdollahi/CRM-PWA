@@ -24,7 +24,7 @@ class HomePage extends React.Component {
         {
           user.isLoggedIn &&
           <div>
-            <p>Dear <b>{user.profile.username}</b>, welcome to Sepanta</p>
+            <p>Dear <b>{user.profile.Username}</b>, welcome to Sepanta</p>
             <button className="btn btn-default" onClick={this.signOut}>Sign Out</button>
           </div>
         }
