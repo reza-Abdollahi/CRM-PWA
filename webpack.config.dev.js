@@ -25,7 +25,7 @@ export default {
   module: {
     rules: [
       {test: /\.js$/, include: path.join(__dirname, 'src'), loader: ['babel-loader']},
-      {test: /(\.css)$/, use: ["style-loader", "css-loader"]},
+      {test: /\.(le|c)ss$/, use: ["style-loader", "css-loader", "less-loader"]},
       {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'},
       {
         test: /\.(woff|woff2)$/,

@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import App from './components/App';
 import LoginPage from './components/auth/LoginPage';
-import './styles/styles.css';
+import './styles/styles.less';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 if (process.env.NODE_ENV !== 'production') {
