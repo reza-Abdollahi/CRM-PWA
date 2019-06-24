@@ -1,15 +1,10 @@
 import webpack from 'webpack';
 import path from 'path';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-
-const GLOBALS = {
-  'process.env.NODE_ENV': JSON.stringify('production')
-};
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 export default {
-  debug: true,
+  mode: 'production',
   devtool: 'source-map',
-  noInfo: false,
   entry: './src/index',
   target: 'web',
   output: {
@@ -20,21 +15,39 @@ export default {
   devServer: {
     contentBase: './dist'
   },
+  performance: {
+    maxAssetSize: 300000,
+    maxEntrypointSize: 400000
+  },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.DefinePlugin(GLOBALS),
-    new ExtractTextPlugin('styles.css'),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin()
+    new MiniCssExtractPlugin({filename: 'styles.css'})
   ],
   module: {
-    loaders: [
-      {test: /\.js$/, include: path.join(__dirname, 'src'), loaders: ['babel']},
-      {test: /(\.css)$/, loader: ExtractTextPlugin.extract("css?sourceMap")},
-      {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file"},
-      {test: /\.(woff|woff2)$/, loader: "url?prefix=font/&limit=5000"},
-      {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream"},
-      {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml"}
+    rules: [
+      {test: /\.js$/, include: path.join(__dirname, 'src'), loader: 'babel-loader'},
+      {test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader']},
+      {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader"},
+      {
+        test: /\.(woff|woff2)$/,
+        use: [{
+          loader: "url-loader?prefix=font/",
+          options: {limit: 5000}
+        }]
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: "url-loader?mimetype=application/octet-stream",
+          options: {limit: 10000, mimetype: 'application/octet-stream'}
+        }]
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: "url-loader?mimetype=image/svg+xml",
+          options: {limit: 10000, mimetype: 'image/svg+xml'}
+        }]
+      }
     ]
   }
 };
