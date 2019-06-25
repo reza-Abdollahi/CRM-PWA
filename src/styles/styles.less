@@ -1,10 +1,43 @@
-nav {
-  a {
-    margin: 0 10px;
+#sizes() {
+  header-height: 45px;
+  footer-height: 45px;
+}
 
-    &.active{
-      &, &:focus{
-        color: orange;
+#app-container{
+  header{
+    height: #sizes[header-height];
+    background-color: lightgrey;
+    border-bottom: 1px solid #ccc;
+
+    h2 {
+      margin: 5px 0;
+    }
+  }
+
+  main {
+    padding-top: #sizes[header-height] + 2;
+    padding-bottom: #sizes[footer-height] + 2;
+  }
+
+  footer{
+    height: #sizes[footer-height];
+    background-color: lightgrey;
+    border-top: 1px solid #ccc;
+
+    nav {
+      text-align: center;
+
+      a {
+        display: block;
+        height: #sizes[footer-height]-1;
+        padding: (#sizes[footer-height]-1)/4 10px;
+        text-decoration: none;
+
+        &.active{
+          &, &:focus{
+            color: orange;
+          }
+        }
       }
     }
   }

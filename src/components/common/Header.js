@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {NavLink} from 'react-router-dom';
 import LoadingDots from './LoadingDots';
 
 const Header = ({loading}) => {
   return (
-    <nav>
-      <NavLink exact to="/" activeClassName="active">Home</NavLink>
-      <NavLink to="/about" activeClassName="active">About</NavLink>
-
-      {loading && <LoadingDots interval={100} dots={20} />}
-    </nav>
+    <header className="fixed-top text-center">
+      <h2>سپنتا</h2>
+      <div className="float-right" style={{position:'absolute', top:0, left: 0}}>
+        {/*temporarily styled untill being replaced by another mechanism*/}
+        {loading && <LoadingDots interval={100} dots={20} />}
+      </div>
+    </header>
   );
 };
 

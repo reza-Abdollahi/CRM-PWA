@@ -7,7 +7,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import App from './components/App';
 import LoginPage from './components/auth/LoginPage';
 import './styles/styles.less';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/rtlbootstrap/dist/css/bootstrap.min.css';
 
 if (process.env.NODE_ENV !== 'production') {
   const {mockBackendApi} = require('./helpers/mockApi');
