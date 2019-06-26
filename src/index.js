@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import App from './components/App';
 import LoginPage from './components/auth/LoginPage';
+import './helpers/configureFontAwesome';
 import './styles/styles.less';
 import '../node_modules/rtlbootstrap/dist/css/bootstrap.min.css';
 
