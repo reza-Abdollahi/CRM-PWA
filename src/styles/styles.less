@@ -1,12 +1,16 @@
 #sizes() {
   header-height: 45px;
-  footer-height: 45px;
+  footer-height: 55px;
 }
+@navbar-color: #fff;
 
+body{
+    background-color: #eee;
+}
 #app-container{
   header{
     height: #sizes[header-height];
-    background-color: lightgrey;
+    background-color: @navbar-color;
     border-bottom: 1px solid #ccc;
 
     h2 {
@@ -21,7 +25,7 @@
 
   footer{
     height: #sizes[footer-height];
-    background-color: lightgrey;
+    background-color: @navbar-color;
     border-top: 1px solid #ccc;
 
     nav {
@@ -30,12 +34,17 @@
       a {
         display: block;
         height: #sizes[footer-height]-1;
-        padding: (#sizes[footer-height]-1)/4 10px;
         text-decoration: none;
+        color: dimgrey;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
         &.active{
           &, &:focus{
-            color: orange;
+            color: royalblue;
           }
         }
       }

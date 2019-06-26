@@ -8,10 +8,10 @@ const Footer = () => {
     <footer className="fixed-bottom">
       <nav className="row">
         <div className="col">
-          <NavLink exact to="/" activeClassName="active"><FontAwesomeIcon icon="home" /></NavLink>
+          <NavLink exact to="/" activeClassName="active"><FontAwesomeIcon icon="home" size="lg" /><span>خانه</span></NavLink>
         </div>
         <div className="col">
-          <NavLink to="/about" activeClassName="active"><FontAwesomeIcon icon="ellipsis-h" /></NavLink>
+          <NavLink to="/about" activeClassName="active"><FontAwesomeIcon icon="ellipsis-h" size="lg" /><span>سایر</span></NavLink>
         </div>
       </nav>
     </footer>
