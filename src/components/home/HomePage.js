@@ -2,20 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {logout} from '../../actions/authActions';
 
 class HomePage extends React.Component {
-  constructor(props){
-    super(props);
-
-    this.signOut = this.signOut.bind(this);
-  }
-
-  signOut(){
-    this.props.logout();
-    this.props.history.replace('/');
-  }
-
   render() {
     const {user} = this.props;
     return (
@@ -25,7 +13,6 @@ class HomePage extends React.Component {
           user.isLoggedIn &&
           <div>
             <p>Dear <b>{user.profile.Username}</b>, welcome to Sepanta</p>
-            <button className="btn btn-default" onClick={this.signOut}>Sign Out</button>
           </div>
         }
         {
@@ -38,9 +25,7 @@ class HomePage extends React.Component {
 }
 
 HomePage.propTypes = {
-  history: PropTypes.object.isRequired,
-  user: PropTypes.object,
-  logout: PropTypes.func.isRequired
+  user: PropTypes.object
 };
 
 function mapStateToProps(state) {
@@ -49,4 +34,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {logout})(HomePage);
+export default connect(mapStateToProps)(HomePage);

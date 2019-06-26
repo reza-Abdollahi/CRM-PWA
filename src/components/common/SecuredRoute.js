@@ -16,7 +16,7 @@ function SecuredRoute({ isAuthenticated, component: Component, ...rest }) {
 }
 
 SecuredRoute.propTypes = {
-  component: PropTypes.func.isRequired,
+  component: PropTypes.object.isRequired,
   location: PropTypes.object,
   isAuthenticated: PropTypes.bool
 };

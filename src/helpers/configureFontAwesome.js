@@ -1,4 +1,14 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHome,
+  faEllipsisH
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  faUserCircle as userCircleRegular
+} from '@fortawesome/free-regular-svg-icons';
 
-library.add(fas);
+library.add(
+  faHome,
+  faEllipsisH,
+  userCircleRegular
+);

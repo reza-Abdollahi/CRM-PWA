@@ -11,7 +11,7 @@ const Footer = () => {
           <NavLink exact to="/" activeClassName="active"><FontAwesomeIcon icon="home" size="lg" /><span>خانه</span></NavLink>
         </div>
         <div className="col">
-          <NavLink to="/about" activeClassName="active"><FontAwesomeIcon icon="ellipsis-h" size="lg" /><span>سایر</span></NavLink>
+          <NavLink to="/setting" activeClassName="active"><FontAwesomeIcon icon="ellipsis-h" size="lg" /><span>سایر</span></NavLink>
         </div>
       </nav>
     </footer>
