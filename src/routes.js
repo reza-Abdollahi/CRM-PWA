@@ -8,7 +8,7 @@ import SecuredRoute from './components/common/SecuredRoute';
 const Routes = ({location}) => {
   return (
     <Switch>
-      <Route exact path="/" component={HomePage} />
+      <SecuredRoute exact path="/" component={HomePage} />
       <SecuredRoute path="/setting" component={AboutPage} />
       <Redirect to={{
         pathname: '/not-found',

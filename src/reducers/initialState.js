@@ -5,5 +5,6 @@ const userInitialState = user ? { isLoggedIn: true, profile: user } : {};
 
 export default {
   user: userInitialState,
-  activeAjaxCalls: 0
+  activeAjaxCalls: 0,
+  lines: []
 };

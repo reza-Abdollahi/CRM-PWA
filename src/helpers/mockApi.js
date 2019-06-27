@@ -32,6 +32,23 @@ export function mockBackendApi() {
             return;
         }
 
+        // get lines
+        if (url.match(/\/lines/) && opts.method === 'GET') {
+            if (opts.headers && opts.headers.Authorization) {
+              let authHeaderParts = opts.headers.Authorization.split('-')
+                ,userid = parseInt(authHeaderParts[authHeaderParts.length - 1])
+                ,matchedUsers = db.users.filter(user => user.id === userid)
+                ,user = matchedUsers.length ? matchedUsers[0] : null;
+
+                resolve(fetchResponse(true, user.lines));
+            } else {
+                // return 401 not authorised if token is null or invalid
+                resolve(fetchResponse(false, {message: "UnAuthorized"}, 401));
+            }
+
+            return;
+        }
+
         // pass through any requests not handled above
         realFetch(url, opts).then(response => resolve(response));
 
@@ -40,8 +57,8 @@ export function mockBackendApi() {
   };
 }
 
-function fetchResponse(success, data) {
-  return { ok: success, text: () => Promise.resolve(JSON.stringify(data)) };
+function fetchResponse(success, data, statusCode) {
+  return { ok: success, status: statusCode || 200, text: () => Promise.resolve(JSON.stringify(data)) };
 }
 
 function getStaticData() {
@@ -52,14 +69,21 @@ function getStaticData() {
       username: 'reza',
       password: '123',
       firstName: 'Reza',
-      lastName: 'Abdollahi'
+      lastName: 'Abdollahi',
+      lines: [
+        {id: 3, phoneNumber: 2184211308, statusText: "connected"}
+      ]
     },
     {
       id: 2,
       username: 'test',
       password: '123',
       firstName: 'John',
-      lastName: 'Smith'
+      lastName: 'Smith',
+      lines: [
+        {id: 1, phoneNumber: 2184211310, statusText: "requested"},
+        {id: 2, phoneNumber: 2184211309, statusText: "connected"}
+      ]
     },
   ];
   return {users};

@@ -3,3 +3,5 @@ export const AJAX_CALL_ERROR = "AJAX_CALL_ERROR";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGOUT = "LOGOUT";
+
+export const LINES_GETALL_SUCCESS = "LINES_GETALL_SUCCESS";
