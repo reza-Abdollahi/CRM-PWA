@@ -5,6 +5,7 @@ import configureStore from './store/configureStore';
 import {Provider} from 'react-redux';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import App from './components/App';
+import NotFound from './components/common/NotFound';
 import LoginPage from './components/auth/LoginPage';
 import './helpers/configureFontAwesome';
 import '../node_modules/rtlbootstrap/dist/css/bootstrap.min.css';
@@ -22,6 +23,7 @@ render(
     <Router>
       <Switch>
         <Route path="/login" component={LoginPage} />
+        <Route path="/not-found" component={NotFound} />
         <Route path="/" component={App} />
       </Switch>
     </Router>

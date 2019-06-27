@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Header from "./common/Header";
 import Footer from "./common/Footer";
 import {connect} from "react-redux";
-import routes from '../routes';
+import Routes from '../routes';
 
 class App extends React.Component {
   render() {
@@ -11,7 +11,7 @@ class App extends React.Component {
       <div id="app-container" className="container-fluid">
         <Header loading={this.props.loading} />
         <main>
-          {routes}
+          <Routes />
         </main>
         <Footer />
       </div>

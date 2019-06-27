@@ -1,14 +1,25 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import HomePage from './components/home/HomePage';
 import AboutPage from './components/setting/SettingPage';
-import NotFound from './components/common/NotFound';
 import SecuredRoute from './components/common/SecuredRoute';
 
-export default (
-  <Switch>
-    <Route exact path="/" component={HomePage} />
-    <SecuredRoute path="/setting" component={AboutPage} />
-    <Route component={NotFound} />
-  </Switch>
-);
+const Routes = ({location}) => {
+  return (
+    <Switch>
+      <Route exact path="/" component={HomePage} />
+      <SecuredRoute path="/setting" component={AboutPage} />
+      <Redirect to={{
+        pathname: '/not-found',
+        search: `${location.pathname}`
+      }} />
+    </Switch>
+  );
+};
+
+Routes.propTypes = {
+  location: PropTypes.object
+};
+
+export default withRouter(Routes);
