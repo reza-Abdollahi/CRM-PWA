@@ -3,21 +3,11 @@ import PropTypes from 'prop-types';
 import FieldGroup from '../common/FieldGroup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {connect} from 'react-redux';
-import {logout} from '../../actions/authActions';
+import {Link} from 'react-router-dom';
 
 class SettingPage extends React.Component {
-  constructor(props){
-    super(props);
-
-    this.signOut = this.signOut.bind(this);
-  }
-
-  signOut(){
-    this.props.logout();
-    this.props.history.replace('/');
-  }
-
   render() {
+    const {FirstName, LastName, Username} = this.props.userProfile;
     return (
       <div>
         <FieldGroup title="اطلاعات کاربر">
@@ -26,15 +16,15 @@ class SettingPage extends React.Component {
               <FontAwesomeIcon icon={['far', 'user-circle']} size="2x" style={{color: '#777'}} />
             </div>
             <div className="col">
-              {this.props.userProfile.FirstName} {this.props.userProfile.LastName}
+              {FirstName} {LastName}
               <br/>
-              <span className="text-muted">({this.props.userProfile.Username})</span>
+              <span className="text-muted">({Username})</span>
             </div>
           </div>
         </FieldGroup>
 
         <FieldGroup className="text-center">
-          <button className="btn btn-default btn-block text-danger" onClick={this.signOut}>خروج</button>
+          <Link to="/login" className="btn btn-default btn-block text-danger">خروج</Link>
         </FieldGroup>
       </div>
     );
@@ -42,9 +32,7 @@ class SettingPage extends React.Component {
 }
 
 SettingPage.propTypes = {
-  userProfile: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
+  userProfile: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
@@ -53,4 +41,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {logout})(SettingPage);
+export default connect(mapStateToProps)(SettingPage);

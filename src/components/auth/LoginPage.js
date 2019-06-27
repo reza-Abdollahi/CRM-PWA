@@ -9,6 +9,8 @@ class LoginPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    this.props.actions.logout();
+
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
@@ -59,13 +61,8 @@ class LoginPage extends React.Component {
   }
 
   render(){
-    const {isLoggedIn} = this.props;
     const {username, password, saving, errors} = this.state;
 
-    if (isLoggedIn) {
-      this.props.history.replace("/");
-      return null;
-    }
     return (
       <div className="container-fluid">
         <LoginForm username={username} password={password} saving={saving} errors={errors}
@@ -78,16 +75,8 @@ class LoginPage extends React.Component {
 LoginPage.propTypes = {
   actions: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  location: PropTypes.object,
-  isLoggedIn: PropTypes.bool
+  location: PropTypes.object
 };
-
-function mapStateToProps(state, ownProps) {
-  const {isLoggedIn} = state.user;
-  return{
-    isLoggedIn
-  };
-}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -95,4 +84,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect(null, mapDispatchToProps)(LoginPage);
