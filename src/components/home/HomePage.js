@@ -10,9 +10,10 @@ class HomePage extends React.Component {
   }
 
   render() {
+    const {lines, activeAjaxCalls} = this.props;
     return (
       <div>
-        <SelectLine lines={this.props.lines} />
+        <SelectLine lines={this.props.lines} loadingCompleted={activeAjaxCalls == 0} />
       </div>
     );
   }
@@ -21,12 +22,14 @@ class HomePage extends React.Component {
 HomePage.propTypes = {
   userProfile: PropTypes.object,
   lines: PropTypes.array,
+  activeAjaxCalls: PropTypes.number.isRequired,
   getAllLines: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     userProfile: state.user.profile,
+    activeAjaxCalls: state.activeAjaxCalls,
     lines: state.lines
   };
 }
