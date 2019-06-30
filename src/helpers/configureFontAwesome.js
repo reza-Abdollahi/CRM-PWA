@@ -1,6 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faHome,
+  faSearch,
   faEllipsisH
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -10,5 +11,6 @@ import {
 library.add(
   faHome,
   faEllipsisH,
+  faSearch,
   userCircleRegular
 );

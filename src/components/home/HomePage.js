@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import FieldGroup from '../common/FieldGroup';
 import {getAllLines} from '../../actions/lineActions';
+import SelectLine from '../Line/SelectLine';
 
 class HomePage extends React.Component {
   componentDidMount(){
@@ -13,13 +12,7 @@ class HomePage extends React.Component {
   render() {
     return (
       <div>
-        <FieldGroup title="انتخاب خط">
-          <ul className="m-0">
-            {this.props.lines.map(l =>
-              <li key={l.id}>{l.phoneNumber}</li>
-            )}
-          </ul>
-        </FieldGroup>
+        <SelectLine lines={this.props.lines} />
       </div>
     );
   }
