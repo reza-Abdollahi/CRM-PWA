@@ -25,7 +25,8 @@ export default {
   module: {
     rules: [
       {test: /\.js$/, include: path.join(__dirname, 'src'), loader: 'babel-loader'},
-      {test: /\.(le|c)ss$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']},
+      {test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader']},
+      {test: /\.less$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']},
       {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader"},
       {
         test: /\.(woff|woff2)$/,

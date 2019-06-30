@@ -8,7 +8,8 @@ import App from './components/App';
 import NotFound from './components/common/NotFound';
 import LoginPage from './components/auth/LoginPage';
 import './helpers/configureFontAwesome';
-import '../node_modules/rtlbootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/@ghalamborm/bootstrap4-rtl/bootstrap-rtl.min.css';
 import './styles/styles.less';
 
 if (process.env.NODE_ENV !== 'production') {
