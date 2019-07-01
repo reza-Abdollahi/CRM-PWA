@@ -1,14 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {getAllLines} from '../../actions/lineActions';
 import SelectLine from '../line/SelectLine';
 
 class HomePage extends React.Component {
-  componentDidMount(){
-    this.props.getAllLines();
-  }
-
   render() {
     const {lines, activeAjaxCalls} = this.props;
     return (
@@ -23,7 +18,6 @@ HomePage.propTypes = {
   userProfile: PropTypes.object,
   lines: PropTypes.array,
   activeAjaxCalls: PropTypes.number.isRequired,
-  getAllLines: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -34,4 +28,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {getAllLines})(HomePage);
+export default connect(mapStateToProps)(HomePage);

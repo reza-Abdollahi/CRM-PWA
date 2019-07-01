@@ -4,8 +4,13 @@ import Header from "./common/Header";
 import Footer from "./common/Footer";
 import {connect} from "react-redux";
 import Routes from '../routes';
+import {getAllLines} from '../actions/lineActions';
 
 class App extends React.Component {
+  componentDidMount(){
+    this.props.getAllLines();
+  }
+
   render() {
     return (
       <div id="app-container" className="container-fluid">
@@ -20,7 +25,8 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  getAllLines: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -29,4 +35,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, {getAllLines})(App);
