@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {getAllLines} from '../../actions/lineActions';
-import SelectLine from '../Line/SelectLine';
+import SelectLine from '../line/SelectLine';
 
 class HomePage extends React.Component {
   componentDidMount(){
