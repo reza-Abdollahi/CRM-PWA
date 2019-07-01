@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import LoadingDots from './LoadingDots';
 
 const Header = ({loading}) => {
@@ -18,4 +19,10 @@ Header.propTypes = {
   loading: PropTypes.bool.isRequired
 };
 
-export default Header;
+function mapStateToProps(state) {
+  return {
+    loading: state.activeAjaxCalls > 0
+  };
+}
+
+export default connect(mapStateToProps)(Header);

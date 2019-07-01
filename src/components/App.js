@@ -14,7 +14,7 @@ class App extends React.Component {
   render() {
     return (
       <div id="app-container" className="container-fluid">
-        <Header loading={this.props.loading} />
+        <Header />
         <main>
           <Routes />
         </main>
@@ -25,14 +25,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  loading: PropTypes.bool.isRequired,
   getAllLines: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    loading: state.activeAjaxCalls > 0
-  };
-}
-
-export default connect(mapStateToProps, {getAllLines})(App);
+export default connect(null, {getAllLines})(App);
