@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import FieldGroup from '../common/FieldGroup';
 import ListGroup from '../common/ListGroup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {Link, Redirect} from 'react-router-dom';
 
-const SelectLine = ({lines, loadingCompleted}) => {
+const SelectLinePage = ({lines, loadingCompleted}) => {
   switch (lines.length) {
     case 0:
       return loadingCompleted
@@ -39,9 +40,17 @@ function getLineUrl(line) {
   return `/line/${line.id}`;
 }
 
-SelectLine.propTypes = {
+SelectLinePage.propTypes = {
   lines: PropTypes.arrayOf(PropTypes.object),
   loadingCompleted: PropTypes.bool.isRequired
 };
 
-export default SelectLine;
+
+function mapStateToProps(state) {
+  return {
+    loadingCompleted: state.activeAjaxCalls === 0,
+    lines: state.lines,
+  };
+}
+
+export default connect(mapStateToProps)(SelectLinePage);
