@@ -5,3 +5,4 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGOUT = "LOGOUT";
 
 export const LINES_GETALL_SUCCESS = "LINES_GETALL_SUCCESS";
+export const LINES_SELECT = "LINES_SELECT";
