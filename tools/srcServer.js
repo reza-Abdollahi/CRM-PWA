@@ -3,10 +3,16 @@ import webpack from 'webpack';
 import path from 'path';
 import config from '../webpack.config.dev';
 import open from 'open';
+import proxy from 'http-proxy-middleware';
 
 const port = 3000;
 const app = express();
 const compiler = webpack(config);
+
+app.use(
+  '/api2',
+  proxy({ target: 'https://ispbeta.sepanta.com', changeOrigin: true })
+);
 
 app.use(require('webpack-dev-middleware')(compiler, {
   stats: "errors-warnings",

@@ -8,7 +8,7 @@ class lineApi {
         method: 'GET',
         headers: authHeader()
     };
-    return fetch(`/lines`, requestOptions).then(handleResponse);
+    return fetch(`/api2/ActiveFile`, requestOptions).then(handleResponse);
   }
 
 }

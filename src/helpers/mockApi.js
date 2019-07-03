@@ -8,7 +8,7 @@ export function mockBackendApi() {
         const db = getStaticData();
 
         // authenticate
-        if (url.match(/\/users\/authenticate/) && opts.method === 'POST') {
+        if (url.match(/\/authentication\/login/) && opts.method === 'POST') {
             let params = JSON.parse(opts.body);
 
             let filteredUsers = db.users.filter(user => {
@@ -33,7 +33,7 @@ export function mockBackendApi() {
         }
 
         // get lines
-        if (url.match(/\/lines/) && opts.method === 'GET') {
+        if (url.match(/\/ActiveFile/) && opts.method === 'GET') {
             if (opts.headers && opts.headers.Authorization) {
               let authHeaderParts = opts.headers.Authorization.split('-')
                 ,userid = parseInt(authHeaderParts[authHeaderParts.length - 1])

@@ -9,7 +9,7 @@ class AuthApi {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
     };
-    return fetch(`/users/authenticate`, requestOptions)
+    return fetch(`/api2/authentication/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
             saveUserState(user);
