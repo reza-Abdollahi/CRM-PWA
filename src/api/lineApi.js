@@ -1,5 +1,4 @@
-import {handleResponse} from './helpers';
-import {authHeader} from '../helpers/persistentState';
+import {handleResponse, authHeader} from './helpers';
 
 class lineApi {
 

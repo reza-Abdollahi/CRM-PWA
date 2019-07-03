@@ -17,13 +17,7 @@ export function mockBackendApi() {
 
             if (filteredUsers.length) {
                 let user = filteredUsers[0];
-                let responseJson = {
-                    Id: user.id,
-                    Username: user.username,
-                    FirstName: user.firstName,
-                    LastName: user.lastName,
-                    Token: `fake-jwt-token-${user.id}`
-                };
+                let responseJson = { secretKey: `fake-jwt-token-${user.id}` };
                 resolve(fetchResponse(true, responseJson));
             } else {
                 resolve(fetchResponse(false, {message: "Username or password is incorrect"}));
@@ -32,15 +26,33 @@ export function mockBackendApi() {
             return;
         }
 
+        // get user profile
+        if (url.match(/\/customer/) && opts.method === 'GET') {
+            if (opts.headers && opts.headers.Authorization) {
+              const user = getUserFromResponse(db, opts.headers);
+              if (user)
+                resolve(fetchResponse(true, user));
+              else
+                resolve(fetchResponse(false, {message: "invalid user"}));
+            } else {
+              // return 401 not authorised if token is null or invalid
+              resolve(fetchResponse(false, {message: "UnAuthorized"}, 401));
+            }
+            return;
+        }
+
         // get lines
         if (url.match(/\/ActiveFile/) && opts.method === 'GET') {
             if (opts.headers && opts.headers.Authorization) {
-              let authHeaderParts = opts.headers.Authorization.split('-')
-                ,userid = parseInt(authHeaderParts[authHeaderParts.length - 1])
-                ,matchedUsers = db.users.filter(user => user.id === userid)
-                ,user = matchedUsers.length ? matchedUsers[0] : null;
+              const user = getUserFromResponse(db, opts.headers);
+              if (user) {
+                const lines = db.lines.filter(line => line.userId === user.id).map(l =>
+                  ({id: l.id, "number": l.number})
+                );
+                resolve(fetchResponse(true, lines));
+              }
+              else resolve(fetchResponse(false, {message: "invalid user"}));
 
-                resolve(fetchResponse(true, user.lines));
             } else {
                 // return 401 not authorised if token is null or invalid
                 resolve(fetchResponse(false, {message: "UnAuthorized"}, 401));
@@ -61,6 +73,14 @@ function fetchResponse(success, data, statusCode) {
   return { ok: success, status: statusCode || 200, text: () => Promise.resolve(JSON.stringify(data)) };
 }
 
+function getUserFromResponse(db, responseHeaders) {
+  const authHeaderParts = responseHeaders.Authorization.split('-')
+      ,userid = parseInt(authHeaderParts[authHeaderParts.length - 1])
+      ,matchedUsers = db.users.filter(user => user.id === userid)
+      ,user = matchedUsers.length ? matchedUsers[0] : null;
+  return user;
+}
+
 function getStaticData() {
   // array of registered users
   let users = [
@@ -68,23 +88,85 @@ function getStaticData() {
       id: 1,
       username: 'reza',
       password: '123',
+      isMale: true,
       firstName: 'Reza',
       lastName: 'Abdollahi',
-      lines: [
-        {id: 3, phoneNumber: 2184211308, statusText: "connected"}
-      ]
+      phone: "",
+      cellPhone: "989359175720",
+      eMail: 'abdollahi.reza@live.com',
+      address: 'Shiraz, Iran',
+      balance: 11098,
+      company: null,
     },
     {
       id: 2,
       username: 'test',
       password: '123',
-      firstName: 'John',
-      lastName: 'Smith',
-      lines: [
-        {id: 1, phoneNumber: 2184211310, statusText: "requested"},
-        {id: 2, phoneNumber: 2184211309, statusText: "connected"}
-      ]
+      isMale:true,
+      firstName:"مسعود",
+      lastName:"کلانتری",
+      fatherName:null,
+      nationalCode:null,
+      birthDate:13491220,
+      phone:"2177202699",
+      cellPhone:"989121790377",
+      postalCode:"1649714541",
+      address:"نارمک - گلبرگ  شرقی -  بین مهر مداین -  پ  379  خدمات کامپیوتر گلبرگ",
+      eMail:"golbargcom@gmail.com",
+      balance:11098,
+      company:null
     },
   ];
-  return {users};
+
+  const lines = [
+    {
+      id:127307,
+      number:2177202699,
+      status:"active",
+      prepaidService:null,
+      activeService: {
+        accounts:null,
+        id:2657676,
+        tarrifId:8084,
+        startDateTime:13980202141833,
+        endDateTime:13980430141833,
+        tarrifClass:"spring campaign",
+        serviceTitle:"spring campaign - 3months - 10240Gig - 16Mbps"
+      },
+      userId: 1,
+    },
+    {
+      id:127308,
+      number:2177202799,
+      status:"غیرفعال",
+      prepaidService:null,
+      activeService: {
+        accounts:null,
+        id:2657776,
+        tarrifId:8085,
+        startDateTime:13980202141833,
+        endDateTime:13980430141833,
+        tarrifClass:"تابستانه",
+        serviceTitle:" تابستانه (۱۰گیگ ۳ماه ۴۰۹۶)"
+      },
+      userId: 2,
+    },
+    {
+      id:127309,
+      number:2177202899,
+      status:"فعال",
+      prepaidService:null,
+      activeService: {
+        accounts:null,
+        id:2657876,
+        tarrifId:8086,
+        startDateTime:13980202141833,
+        endDateTime:13980430141833,
+        tarrifClass:"تابستانه",
+        serviceTitle:" تابستانه (۱۰گیگ ۳ماه ۴۰۹۶)"
+      },
+      userId: 2,
+    },
+  ];
+  return {users, lines};
 }

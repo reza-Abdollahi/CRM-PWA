@@ -1,40 +1,32 @@
-export function loadUserState() {
+export const keys = {
+  USER_SECRET_KEY: "secretKey",
+};
+
+export function loadState(key) {
   try {
-    const userData = localStorage.getItem('user');
-    if (userData === undefined) {
+    const data = localStorage.getItem(key);
+    if (data === undefined) {
       return undefined;
     }
-    return JSON.parse(userData);
+    return JSON.parse(data);
   } catch (e) {
     return undefined;
   }
 }
 
-export function saveUserState(user) {
+export function saveState(key, data) {
   try {
-    const userData = JSON.stringify(user);
-    localStorage.setItem('user', userData);
+    const serializedData = JSON.stringify(data);
+    localStorage.setItem(key, serializedData);
   } catch (e) {
     //  ignore
   }
 }
 
-export function removeUserState() {
+export function removeState(key) {
   try {
-    localStorage.removeItem('user');
+    localStorage.removeItem(key);
   } catch (e) {
     //  ignore
   }
-}
-
-export function authHeader() {
-    // return authorization header with jwt token
-    const profile = loadUserState();
-    const token = profile && profile.Token;
-
-    if (token) {
-        return { 'Authorization': 'Bearer ' + token };
-    } else {
-        return {};
-    }
 }

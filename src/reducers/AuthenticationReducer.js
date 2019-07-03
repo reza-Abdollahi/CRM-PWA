@@ -6,10 +6,14 @@ export default function AuthenticationReducer(state = initialState.user, action)
     case types.LOGIN_SUCCESS:
       return {
         isLoggedIn: true,
-        profile: {...action.user}
       };
     case types.LOGOUT:
       return {};
+    case types.USER_GET_PROFILE_SUCCESS:
+      return {
+        isLoggedIn: true,
+        profile: {...action.user}
+      };
     default:
       return state;
   }

@@ -1,5 +1,5 @@
-import {handleResponse} from './helpers';
-import {saveUserState, removeUserState} from '../helpers/persistentState';
+import {handleResponse, authHeader} from './helpers';
+import * as persistentState from '../helpers/persistentState';
 
 class AuthApi {
 
@@ -12,13 +12,21 @@ class AuthApi {
     return fetch(`/api2/authentication/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
-            saveUserState(user);
+            persistentState.saveState(persistentState.keys.USER_SECRET_KEY, user.secretKey);
             return user;
         });
   }
 
+  static getProfileInfo(username, password) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+    return fetch(`/api2/customer`, requestOptions).then(handleResponse);
+  }
+
   static logout(){
-    removeUserState();
+    persistentState.removeState(persistentState.keys.USER_SECRET_KEY);
   }
 
 }

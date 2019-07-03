@@ -15,9 +15,7 @@ class LineDashboardPage extends React.Component {
 
     return (
       <div>
-        phoneNumber: {line.phoneNumber}
-        <br/>
-        status: {line.statusText}
+        phoneNumber: {line.number}
       </div>
     );
   }

@@ -13,7 +13,7 @@ const LinesList = ({lines, onSelectLine}) => {
         lines.map(item => (
           <div key={item.id} className="d-flex">
             <div className="flex-grow-1">
-              {item.phoneNumber}
+              {item.number}
             </div>
             <button value={item.id} className="btn btn-default btn-link"
               onClick={e => onSelectLine(item.id)}>

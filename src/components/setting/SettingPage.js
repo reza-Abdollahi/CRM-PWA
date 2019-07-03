@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 
 class SettingPage extends React.Component {
   render() {
-    const {FirstName, LastName, Username} = this.props.userProfile;
+    const {firstName, lastName, eMail, cellPhone} = this.props.userProfile;
     return (
       <div>
         <FieldGroup title="اطلاعات کاربر">
@@ -16,9 +16,9 @@ class SettingPage extends React.Component {
               <FontAwesomeIcon icon={['far', 'user-circle']} size="2x" style={{color: '#777'}} />
             </div>
             <div className="col">
-              {FirstName} {LastName}
+              {firstName} {lastName}
               <br/>
-              <span className="text-muted">({Username})</span>
+              <span className="text-muted">({eMail || cellPhone})</span>
             </div>
           </div>
         </FieldGroup>
@@ -37,7 +37,7 @@ SettingPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    userProfile: state.user.profile
+    userProfile: state.user.profile || {}
   };
 }
 

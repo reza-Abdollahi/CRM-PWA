@@ -1,7 +1,7 @@
-import {loadUserState} from '../helpers/persistentState';
+import * as persistentState from '../helpers/persistentState';
 
-const user = loadUserState();
-const userInitialState = user ? { isLoggedIn: true, profile: user } : {};
+const userSecretKey = persistentState.loadState(persistentState.keys.USER_SECRET_KEY);
+const userInitialState = userSecretKey ? { isLoggedIn: true } : {};
 
 export default {
   user: userInitialState,
