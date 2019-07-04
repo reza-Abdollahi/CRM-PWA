@@ -10,6 +10,7 @@ import {getProfileInfo} from '../actions/authActions';
 
 class App extends React.Component {
   componentDidMount() {
+    if (!this.props.isLoggedIn) return;
     this.props.actions.getProfileInfo();
     this.props.actions.getAllLines();
   }
@@ -28,8 +29,15 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
+
+function mapStateToProps(state){
+  return {
+    isLoggedIn: state.user.isLoggedIn || false,
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -37,4 +45,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
