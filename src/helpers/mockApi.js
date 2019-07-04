@@ -42,7 +42,7 @@ export function mockBackendApi() {
         }
 
         // get lines
-        if (url.match(/\/ActiveFile/) && opts.method === 'GET') {
+        if (url.match(/\/ActiveFile$/) && opts.method === 'GET') {
             if (opts.headers && opts.headers.Authorization) {
               const user = getUserFromResponse(db, opts.headers);
               if (user) {
@@ -52,6 +52,27 @@ export function mockBackendApi() {
                 resolve(fetchResponse(true, lines));
               }
               else resolve(fetchResponse(false, {message: "invalid user"}));
+
+            } else {
+                // return 401 not authorised if token is null or invalid
+                resolve(fetchResponse(false, {message: "UnAuthorized"}, 401));
+            }
+
+            return;
+        }
+
+        // get line details
+        if (url.match(/\/ActiveFile\/\d+$/) && opts.method === 'GET') {
+            if (opts.headers && opts.headers.Authorization) {
+              const user = getUserFromResponse(db, opts.headers);
+              const urlParts = url.split('/'),
+                    lineId = parseInt(urlParts[urlParts.length - 1]);
+              if (user && lineId) {
+                const lines = db.lines.filter(line => line.userId === user.id && line.id === lineId),
+                      line = lines.length ? lines[0] : undefined;
+                resolve(fetchResponse(true, line));
+              }
+              else resolve(fetchResponse(false, {message: "invalid user or lineId"}));
 
             } else {
                 // return 401 not authorised if token is null or invalid

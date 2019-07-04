@@ -6,6 +6,11 @@ function listReducer(state = initialState.lines.list, action) {
   switch (action.type) {
     case types.LINES_GETALL_SUCCESS:
       return [...action.lines];
+    case types.LINES_GET_DETAIL_SUCCESS:
+      return [
+        ...state.filter(l => l.id !== action.line.id),
+        action.line
+      ];
     default:
       return state;
   }

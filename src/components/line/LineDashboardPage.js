@@ -3,8 +3,16 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import {getSelectedLine} from '../../selectors';
+import {getLineDetails} from '../../actions/lineActions';
 
 class LineDashboardPage extends React.Component {
+
+  componentDidMount() {
+    const selectedLineId = this.props.selectedLineId;
+    if (!selectedLineId) return;
+    this.props.getLineDetails(selectedLineId);
+  }
+
   render() {
     const {line, selectedLineId, match} = this.props;
 
@@ -16,15 +24,19 @@ class LineDashboardPage extends React.Component {
     return (
       <div>
         phoneNumber: {line.number}
+        <br/>
+        status: {line.status}
       </div>
     );
   }
+  
 }
 
 LineDashboardPage.propTypes = {
   line: PropTypes.object,
   match: PropTypes.object.isRequired,
   selectedLineId: PropTypes.number,
+  getLineDetails: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state, ownProps) {
@@ -34,4 +46,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(LineDashboardPage);
+export default connect(mapStateToProps, {getLineDetails})(LineDashboardPage);
