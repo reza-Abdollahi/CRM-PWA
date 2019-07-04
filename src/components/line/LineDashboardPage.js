@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import {getSelectedLine} from '../../selectors';
 import {getLineDetails} from '../../actions/lineActions';
+import LineDetails from './LineDetails';
 
 class LineDashboardPage extends React.Component {
 
@@ -22,14 +23,10 @@ class LineDashboardPage extends React.Component {
       return null;
 
     return (
-      <div>
-        phoneNumber: {line.number}
-        <br/>
-        status: {line.status}
-      </div>
+      <LineDetails line={line} />
     );
   }
-  
+
 }
 
 LineDashboardPage.propTypes = {
