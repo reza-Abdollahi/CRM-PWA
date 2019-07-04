@@ -12,8 +12,9 @@ class AuthApi {
     return fetch(`/api2/authentication/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
+            if (!user.secretKey)
+              throw new Error("ورود ناموفق");
             persistentState.saveState(persistentState.keys.USER_SECRET_KEY, user.secretKey);
-            return user;
         });
   }
 
