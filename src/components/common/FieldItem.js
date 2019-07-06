@@ -9,9 +9,9 @@ const FieldItem = ({title, value, children, className, ...rest}) => {
         {title}
       </div>
       {
-        value
-          ? <span className="text-secondary">{value}</span>
-          : {children}
+        children
+          ? {children}
+          : <span className="text-secondary">{value}</span>
       }
     </div>
   );
