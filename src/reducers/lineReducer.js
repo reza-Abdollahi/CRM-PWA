@@ -11,6 +11,8 @@ function listReducer(state = initialState.lines.list, action) {
         ...state.filter(l => l.id !== action.line.id),
         action.line
       ];
+    case types.LOGOUT:
+      return initialState.lines.list;
     default:
       return state;
   }
@@ -20,6 +22,8 @@ function selectedIdReducer(state = initialState.lines.selectedId, action) {
   switch (action.type) {
     case types.LINES_SELECT:
       return action.lineId;
+    case types.LOGOUT:
+      return initialState.lines.selectedId;
     default:
       return state;
   }
