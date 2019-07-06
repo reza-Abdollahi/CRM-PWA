@@ -5,6 +5,7 @@ import {Redirect} from 'react-router-dom';
 import {getSelectedLine} from '../../selectors';
 import {getLineDetails} from '../../actions/lineActions';
 import LineDetails from './LineDetails';
+import LineDetailsHeader from './LineDetailsHeader';
 
 class LineDashboardPage extends React.Component {
 
@@ -15,15 +16,19 @@ class LineDashboardPage extends React.Component {
   }
 
   render() {
-    const {line, selectedLineId, match} = this.props;
+    const {line, selectedLineId, hasMoreLines, match} = this.props;
+    const selectLineUrl = `${match.url}/select`;
 
     if (!selectedLineId)
-      return <Redirect to={`${match.url}/select`} />;
+      return <Redirect to={selectLineUrl} />;
     else if (!line)
       return null;
 
     return (
-      <LineDetails line={line} />
+      <div>
+        <LineDetailsHeader line={line} selectLineUrl={selectLineUrl} hasMoreLines={hasMoreLines} />
+        <LineDetails line={line} />
+      </div>
     );
   }
 
@@ -33,13 +38,16 @@ LineDashboardPage.propTypes = {
   line: PropTypes.object,
   match: PropTypes.object.isRequired,
   selectedLineId: PropTypes.number,
+  hasMoreLines: PropTypes.bool.isRequired,
   getLineDetails: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state, ownProps) {
+  const {selectedId, list} = state.lines;
   return {
     line: getSelectedLine(state),
-    selectedLineId : state.lines.selectedId,
+    selectedLineId : selectedId,
+    hasMoreLines: list.length > 1,
   };
 }
 

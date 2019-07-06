@@ -8,12 +8,6 @@ import ServiceDetails from './ServiceDetails';
 const LineDetails = ({line}) => {
   return (
     <div>
-      <div className="row bg-warning mt-n4" style={{borderRadius:'30px'}}>
-        <div className="col text-center align-bottom pt-5 pb-3">
-          {line.number}
-        </div>
-      </div>
-
       <FieldGroup>
         <FieldItem title="وضعیت" value={line.status} />
       </FieldGroup>

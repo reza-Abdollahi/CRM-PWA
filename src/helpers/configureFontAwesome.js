@@ -2,7 +2,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faHome,
   faSearch,
-  faEllipsisH
+  faEllipsisH,
+  faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faUserCircle as userCircleRegular
@@ -12,5 +13,6 @@ library.add(
   faHome,
   faEllipsisH,
   faSearch,
+  faChevronRight,
   userCircleRegular
 );
