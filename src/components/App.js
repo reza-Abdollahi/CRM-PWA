@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import Routes from '../routes';
 import {getAllLines} from '../actions/lineActions';
 import {getProfileInfo} from '../actions/authActions';
+import Loading from './common/Loading';
 
 class App extends React.Component {
   componentDidMount() {
@@ -21,6 +22,7 @@ class App extends React.Component {
         <Header />
         <main>
           <Routes />
+          <Loading loading={this.props.isLoading} />
         </main>
         <Footer />
       </div>
@@ -31,11 +33,13 @@ class App extends React.Component {
 App.propTypes = {
   actions: PropTypes.object.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state){
   return {
     isLoggedIn: state.user.isLoggedIn || false,
+    isLoading: state.activeAjaxCalls > 0,
   };
 }
 
