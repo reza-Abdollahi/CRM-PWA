@@ -1,12 +1,10 @@
-// This file is written in ES5 since it's not transpiled by Babel.
 // This file does the following:
 // 1. Sets Node environment variable
 // 2. Registers babel for transpiling our code for testing
 // 3. Disables Webpack-specific features that Mocha doesn't understand.
 // 4. Requires jsdom so we can test via an in-memory DOM in Node
 // 5. Sets up global vars that mimic a browser.
-
-/* eslint-disable no-var*/
+// 6. Sets up Enzyme Adapter
 
 /* This setting assures the .babelrc dev config (which includes
  hot module reloading code) doesn't apply for tests.
@@ -31,21 +29,32 @@ require.extensions['.jpg'] = function () {return null;};
 
 // Configure JSDOM and set global variables
 // to simulate a browser environment for tests.
-var jsdom = require('jsdom').jsdom;
+const { JSDOM } = require('jsdom');
 
-var exposedProperties = ['window', 'navigator', 'document'];
+const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
+const { window } = jsdom;
 
-global.document = jsdom('');
-global.window = document.defaultView;
-Object.keys(document.defaultView).forEach((property) => {
-  if (typeof global[property] === 'undefined') {
-    exposedProperties.push(property);
-    global[property] = document.defaultView[property];
-  }
-});
+function copyProps(src, target) {
+  Object.defineProperties(target, {
+    ...Object.getOwnPropertyDescriptors(src),
+    ...Object.getOwnPropertyDescriptors(target),
+  });
+}
 
+global.window = window;
+global.document = window.document;
 global.navigator = {
-  userAgent: 'node.js'
+  userAgent: 'node.js',
 };
+global.requestAnimationFrame = function (callback) {
+  return setTimeout(callback, 0);
+};
+global.cancelAnimationFrame = function (id) {
+  clearTimeout(id);
+};
+copyProps(window, global);
 
-documentRef = document;  //eslint-disable-line no-undef
+
+const Enzyme = require('enzyme');
+const Adapter = require('enzyme-adapter-react-16');
+Enzyme.configure({ adapter: new Adapter() });
