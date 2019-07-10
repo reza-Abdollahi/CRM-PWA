@@ -15,6 +15,7 @@ class AuthApi {
             if (!user.secretKey)
               throw new Error("ورود ناموفق");
             persistentState.saveState(fromState.keys.USER_SECRET_KEY, user.secretKey);
+            return user;
         });
   }
 

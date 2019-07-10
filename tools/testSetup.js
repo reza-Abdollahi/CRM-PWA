@@ -5,6 +5,7 @@
 // 4. Requires jsdom so we can test via an in-memory DOM in Node
 // 5. Sets up global vars that mimic a browser.
 // 6. Sets up Enzyme Adapter
+// 7. mock fetch api using mockBackendApi
 
 /* This setting assures the .babelrc dev config (which includes
  hot module reloading code) doesn't apply for tests.
@@ -52,6 +53,10 @@ global.requestAnimationFrame = function (callback) {
 global.cancelAnimationFrame = function (id) {
   clearTimeout(id);
 };
+
+const { mockBackendApi } = require('../src/helpers/mockApi');
+mockBackendApi();
+
 copyProps(window, global);
 
 

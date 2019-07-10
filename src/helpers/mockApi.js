@@ -1,4 +1,4 @@
-const delay = 1000;
+const delay = process.env.NODE_ENV === 'test' ? 0 : 1000;
 
 export function mockBackendApi() {
   let realFetch = window.fetch;
