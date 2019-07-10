@@ -1,6 +1,6 @@
-import * as persistentState from '../helpers/persistentState';
+import persistentState, * as fromState from '../helpers/persistentState';
 
-const userSecretKey = persistentState.loadState(persistentState.keys.USER_SECRET_KEY);
+const userSecretKey = persistentState.loadState(fromState.keys.USER_SECRET_KEY);
 const userInitialState = userSecretKey ? { isLoggedIn: true } : {};
 
 export default {

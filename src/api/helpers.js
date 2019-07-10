@@ -1,5 +1,5 @@
 import authApi from './authApi';
-import * as persistentState from '../helpers/persistentState';
+import persistentState, * as fromState from '../helpers/persistentState';
 
 export function handleResponse(response) {
   return response.text()
@@ -43,7 +43,7 @@ const handelErrorResponse = (errorType, responseStatus, message, responseBody) =
 
 export function authHeader() {
     // return authorization header with jwt token
-    const secretKey = persistentState.loadState(persistentState.keys.USER_SECRET_KEY);
+    const secretKey = persistentState.loadState(fromState.keys.USER_SECRET_KEY);
 
     if (secretKey) {
         return { 'Authorization': 'Bearer ' + secretKey };

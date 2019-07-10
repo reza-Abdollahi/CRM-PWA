@@ -1,5 +1,5 @@
 import {handleResponse, authHeader} from './helpers';
-import * as persistentState from '../helpers/persistentState';
+import persistentState, * as fromState from '../helpers/persistentState';
 
 class AuthApi {
 
@@ -14,7 +14,7 @@ class AuthApi {
         .then(user => {
             if (!user.secretKey)
               throw new Error("ورود ناموفق");
-            persistentState.saveState(persistentState.keys.USER_SECRET_KEY, user.secretKey);
+            persistentState.saveState(fromState.keys.USER_SECRET_KEY, user.secretKey);
         });
   }
 
@@ -27,7 +27,7 @@ class AuthApi {
   }
 
   static logout(){
-    persistentState.removeState(persistentState.keys.USER_SECRET_KEY);
+    persistentState.removeState(fromState.keys.USER_SECRET_KEY);
   }
 
 }

@@ -31,7 +31,7 @@ require.extensions['.jpg'] = function () {return null;};
 // to simulate a browser environment for tests.
 const { JSDOM } = require('jsdom');
 
-const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
+const jsdom = new JSDOM('<!doctype html><html><body></body></html>', { url: 'http://localhost' });
 const { window } = jsdom;
 
 function copyProps(src, target) {
