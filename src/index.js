@@ -1,9 +1,9 @@
 import 'babel-polyfill';
 import React from 'react';
-import {render} from 'react-dom';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import configureStore from './store/configureStore';
-import {Provider} from 'react-redux';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import App from './components/App';
 import NotFound from './components/common/NotFound';
 import LoginPage from './components/auth/LoginPage';
@@ -13,7 +13,8 @@ import '../node_modules/@ghalamborm/bootstrap4-rtl/bootstrap-rtl.min.css';
 import './styles/styles.less';
 
 if (process.env.NODE_ENV !== 'production') {
-  const {mockBackendApi} = require('./helpers/mockApi');
+  // eslint-disable-next-line global-require
+  const { mockBackendApi } = require('./helpers/mockApi');
   mockBackendApi();
 }
 
@@ -29,5 +30,5 @@ render(
       </Switch>
     </Router>
   </Provider>,
-  document.getElementById("app")
+  document.getElementById("app"),
 );

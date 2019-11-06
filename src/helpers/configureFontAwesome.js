@@ -6,7 +6,7 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import {
-  faUserCircle as userCircleRegular
+  faUserCircle as userCircleRegular,
 } from '@fortawesome/free-regular-svg-icons';
 
 library.add(
@@ -14,5 +14,5 @@ library.add(
   faEllipsisH,
   faSearch,
   faChevronRight,
-  userCircleRegular
+  userCircleRegular,
 );

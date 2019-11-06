@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import * as authActions from '../../actions/authActions';
 import LoginForm from './LoginForm';
 
@@ -9,7 +9,8 @@ class LoginPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.props.actions.logout();
+    const { actions } = this.props;
+    actions.logout();
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -18,54 +19,59 @@ class LoginPage extends React.Component {
       username: "",
       password: "",
       errors: {},
-      saving: false
+      saving: false,
     };
   }
 
-  onChange(event){
-    const {name, value} = event.target;
-    this.setState({[name]:value});
+  onChange(event) {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   }
 
-  validateForm(){
-    let errors = {},
-        formIsValid = true;
+  onSubmit(event) {
+    event.preventDefault();
 
-    if (!this.state.username) {
+    if (!this.validateForm()) { return; }
+
+    const { location, actions, history } = this.props;
+    const { username, password } = this.state;
+    const { from: returnUrl } = location.state || { from: { pathname: "/" } };
+
+    this.setState({ saving: true });
+    actions.login(username, password)
+      .then(() => history.push(returnUrl))
+      .catch((error) => {
+        this.setState({ saving: false, errors: { summary: error.message } });
+      });
+  }
+
+  validateForm() {
+    const errors = {};
+    let formIsValid = true;
+    const { username, password } = this.state;
+
+    if (!username) {
       errors.username = "ورود مقدار الزامی است";
       formIsValid = false;
     }
-    if (!this.state.password) {
+    if (!password) {
       errors.password = "ورود مقدار الزامی است";
       formIsValid = false;
     }
 
-    this.setState({errors});
+    this.setState({ errors });
     return formIsValid;
   }
 
-  onSubmit(event){
-    event.preventDefault();
-
-    if (!this.validateForm())
-      return;
-
-    let { from: returnUrl } = this.props.location.state || { from: { pathname: "/" } };
-
-    this.setState({saving: true});
-    this.props.actions.login(this.state.username, this.state.password)
-      .then(()=> this.props.history.push(returnUrl))
-      .catch(error => {
-        this.setState({saving: false, errors: {summary: error.message}});
-      });
-  }
-
-  render(){
-    const {username, password, saving, errors} = this.state;
+  render() {
+    const {
+      username, password, saving, errors,
+    } = this.state;
 
     return (
       <div className="container-fluid">
-        <LoginForm username={username} password={password} saving={saving} errors={errors}
+        <LoginForm
+username={username} password={password} saving={saving} errors={errors}
           onChange={this.onChange} onSubmit={this.onSubmit} />
       </div>
     );
@@ -75,12 +81,12 @@ class LoginPage extends React.Component {
 LoginPage.propTypes = {
   actions: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  location: PropTypes.object
+  location: PropTypes.object.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(authActions, dispatch)
+    actions: bindActionCreators(authActions, dispatch),
   };
 }
 

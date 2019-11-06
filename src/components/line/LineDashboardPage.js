@@ -1,28 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
-import {getSelectedLine} from '../../selectors';
-import {getLineDetails} from '../../actions/lineActions';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { getSelectedLine } from '../../selectors';
+import { getLineDetails } from '../../actions/lineActions';
 import LineDetails from './LineDetails';
 import LineDetailsHeader from './LineDetailsHeader';
 
 class LineDashboardPage extends React.Component {
-
   componentDidMount() {
-    const selectedLineId = this.props.selectedLineId;
+    const { selectedLineId, getLineDetails: getLineDetailsAction } = this.props;
     if (!selectedLineId) return;
-    this.props.getLineDetails(selectedLineId);
+    getLineDetailsAction(selectedLineId);
   }
 
   render() {
-    const {line, selectedLineId, hasMoreLines, match} = this.props;
+    const {
+      line, selectedLineId, hasMoreLines, match,
+    } = this.props;
     const selectLineUrl = `${match.url}/select`;
 
-    if (!selectedLineId)
-      return <Redirect to={selectLineUrl} />;
-    else if (!line)
-      return null;
+    if (!selectedLineId) { return <Redirect to={selectLineUrl} />; }
+    if (!line) { return null; }
 
     return (
       <div>
@@ -31,7 +30,6 @@ class LineDashboardPage extends React.Component {
       </div>
     );
   }
-
 }
 
 LineDashboardPage.propTypes = {
@@ -42,13 +40,18 @@ LineDashboardPage.propTypes = {
   getLineDetails: PropTypes.func.isRequired,
 };
 
+LineDashboardPage.defaultProps = {
+  line: undefined,
+  selectedLineId: undefined,
+};
+
 function mapStateToProps(state, ownProps) {
-  const {selectedId, list} = state.lines;
+  const { selectedId, list } = state.lines;
   return {
     line: getSelectedLine(state),
-    selectedLineId : selectedId,
+    selectedLineId: selectedId,
     hasMoreLines: list.length > 1,
   };
 }
 
-export default connect(mapStateToProps, {getLineDetails})(LineDashboardPage);
+export default connect(mapStateToProps, { getLineDetails })(LineDashboardPage);

@@ -9,5 +9,5 @@ export default {
   lines: {
     list: [],
     selectedId: null,
-  }
+  },
 };

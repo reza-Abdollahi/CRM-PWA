@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 // This file does the following:
 // 1. Sets Node environment variable
 // 2. Registers babel for transpiling our code for testing
@@ -22,11 +23,19 @@ process.env.NODE_ENV = 'test';
 // before our tests run.
 require('babel-register')();
 
+
+const Enzyme = require('enzyme');
+const Adapter = require('enzyme-adapter-react-16');
+
+Enzyme.configure({ adapter: new Adapter() });
+
+
 // Disable webpack-specific features for tests since
 // Mocha doesn't know what to do with them.
-require.extensions['.css'] = function () {return null;};
-require.extensions['.png'] = function () {return null;};
-require.extensions['.jpg'] = function () {return null;};
+function nullFunc() { return null; }
+require.extensions['.css'] = nullFunc;
+require.extensions['.png'] = nullFunc;
+require.extensions['.jpg'] = nullFunc;
 
 // Configure JSDOM and set global variables
 // to simulate a browser environment for tests.
@@ -35,31 +44,26 @@ const { JSDOM } = require('jsdom');
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>', { url: 'http://localhost' });
 const { window } = jsdom;
 
+global.window = window;
+global.document = window.document;
+global.navigator = {
+  userAgent: 'node.js',
+};
+global.requestAnimationFrame = function addToNextFrame(callback) {
+  return setTimeout(callback, 0);
+};
+global.cancelAnimationFrame = function RemoveNextFrame(id) {
+  clearTimeout(id);
+};
+
+const { mockBackendApi } = require('../src/helpers/mockApi');
+
+mockBackendApi();
+
 function copyProps(src, target) {
   Object.defineProperties(target, {
     ...Object.getOwnPropertyDescriptors(src),
     ...Object.getOwnPropertyDescriptors(target),
   });
 }
-
-global.window = window;
-global.document = window.document;
-global.navigator = {
-  userAgent: 'node.js',
-};
-global.requestAnimationFrame = function (callback) {
-  return setTimeout(callback, 0);
-};
-global.cancelAnimationFrame = function (id) {
-  clearTimeout(id);
-};
-
-const { mockBackendApi } = require('../src/helpers/mockApi');
-mockBackendApi();
-
 copyProps(window, global);
-
-
-const Enzyme = require('enzyme');
-const Adapter = require('enzyme-adapter-react-16');
-Enzyme.configure({ adapter: new Adapter() });

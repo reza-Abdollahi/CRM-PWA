@@ -29,7 +29,7 @@ export function storageFactory(storage) {
       } catch (e) {
         //  ignore
       }
-    }
+    },
   };
 }
 

@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
@@ -8,8 +8,8 @@ function listReducer(state = initialState.lines.list, action) {
       return [...action.lines];
     case types.LINES_GET_DETAIL_SUCCESS:
       return [
-        ...state.filter(l => l.id !== action.line.id),
-        action.line
+        ...state.filter((l) => l.id !== action.line.id),
+        action.line,
       ];
     case types.LOGOUT:
       return initialState.lines.list;
@@ -37,6 +37,6 @@ const linesReducer = combineReducers({
 export default linesReducer;
 
 export const getSelectedLine = (state) => {
-  const selectedLine = state.list.filter(l => l.id == state.selectedId);
+  const selectedLine = state.list.filter((l) => l.id === state.selectedId);
   return selectedLine.length > 0 ? selectedLine[0] : null;
 };

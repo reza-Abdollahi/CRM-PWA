@@ -9,7 +9,7 @@ describe('auth api', () => {
 
   it('login success - set localstorge', (done) => {
     authApi.login("test", "123")
-      .then(user => {
+      .then((user) => {
         expect(persistentState.loadState(fromState.keys.USER_SECRET_KEY)).toEqual(user.secretKey);
         done();
       });

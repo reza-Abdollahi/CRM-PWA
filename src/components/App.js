@@ -1,28 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { bindActionCreators } from 'redux';
 import Header from "./common/Header";
 import Footer from "./common/Footer";
-import {connect} from "react-redux";
-import {bindActionCreators} from 'redux';
 import Routes from '../routes';
-import {getAllLines} from '../actions/lineActions';
-import {getProfileInfo} from '../actions/authActions';
+import { getAllLines } from '../actions/lineActions';
+import { getProfileInfo } from '../actions/authActions';
 import Loading from './common/Loading';
 
 class App extends React.Component {
   componentDidMount() {
-    if (!this.props.isLoggedIn) return;
-    this.props.actions.getProfileInfo();
-    this.props.actions.getAllLines();
+    const { isLoggedIn, actions } = this.props;
+    if (!isLoggedIn) return;
+    actions.getProfileInfo();
+    actions.getAllLines();
   }
 
   render() {
+    const { isLoading } = this.props;
     return (
       <div id="app-container" className="container-fluid">
         <Header />
         <main>
           <Routes />
-          <Loading loading={this.props.isLoading} />
+          <Loading loading={isLoading} />
         </main>
         <Footer />
       </div>
@@ -36,7 +38,7 @@ App.propTypes = {
   isLoading: PropTypes.bool.isRequired,
 };
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
     isLoggedIn: state.user.isLoggedIn || false,
     isLoading: state.activeAjaxCalls > 0,
@@ -45,7 +47,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({getAllLines, getProfileInfo}, dispatch)
+    actions: bindActionCreators({ getAllLines, getProfileInfo }, dispatch),
   };
 }
 

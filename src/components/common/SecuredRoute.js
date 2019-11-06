@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Route, Redirect} from 'react-router-dom';
-import {connect} from 'react-redux';
+import { Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+/* eslint-disable react/jsx-props-no-spreading */
 function SecuredRoute({ isAuthenticated, component: Component, ...rest }) {
   return (
-    // eslint-disable-next-line react/jsx-no-bind
-    <Route {...rest} render={props =>
-        isAuthenticated
+    <Route
+      {...rest}
+      render={(props) => (isAuthenticated
         ? <Component {...props} />
-        : <Redirect to={{ pathname: "/login", state: { from: props.location } }} />
-      }
+        : <Redirect to={{ pathname: "/login", state: { from: props.location } }} />)}
     />
   );
 }
@@ -19,14 +19,14 @@ SecuredRoute.propTypes = {
   component: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.func,
-  ]),
-  location: PropTypes.object,
-  isAuthenticated: PropTypes.bool
+  ]).isRequired,
+  location: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.user && state.user.isLoggedIn
+    isAuthenticated: (state.user && state.user.isLoggedIn) || false,
   };
 }
 
