@@ -2,14 +2,14 @@ import { combineReducers } from 'redux';
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
-function listReducer(state = initialState.lines.list, action) {
+export function listReducer(state = initialState.lines.list, action) {
   switch (action.type) {
     case types.LINES_GETALL_SUCCESS:
       return [...action.lines];
     case types.LINES_GET_DETAIL_SUCCESS:
       return [
         ...state.filter((l) => l.id !== action.line.id),
-        action.line,
+        { ...action.line },
       ];
     case types.LOGOUT:
       return initialState.lines.list;
@@ -18,7 +18,7 @@ function listReducer(state = initialState.lines.list, action) {
   }
 }
 
-function selectedIdReducer(state = initialState.lines.selectedId, action) {
+export function selectedIdReducer(state = initialState.lines.selectedId, action) {
   switch (action.type) {
     case types.LINES_SELECT:
       return action.lineId;
