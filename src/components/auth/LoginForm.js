@@ -19,7 +19,8 @@ const LoginForm = ({
           type="submit"
           className="btn btn-primary btn-block"
           disabled={saving}
-          value={saving ? "بارگذاری..." : "ورود"} />
+          value={saving ? "بارگذاری..." : "ورود"}
+          onClick={onSubmit} />
       </form>
     </div>
   </div>

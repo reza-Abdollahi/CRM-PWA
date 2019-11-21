@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as authActions from '../../actions/authActions';
 import LoginForm from './LoginForm';
 
-class LoginPage extends React.Component {
+export class LoginPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 

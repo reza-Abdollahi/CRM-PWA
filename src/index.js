@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import configureStore from './store/configureStore';
 import App from './components/App';
 import NotFound from './components/common/NotFound';
-import LoginPage from './components/auth/LoginPage';
+import Login from './components/auth/LoginPage';
 import './helpers/configureFontAwesome';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/@ghalamborm/bootstrap4-rtl/bootstrap-rtl.min.css';
@@ -24,7 +24,7 @@ render(
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route path="/login" component={LoginPage} />
+        <Route path="/login" component={Login} />
         <Route path="/not-found" component={NotFound} />
         <Route path="/" component={App} />
       </Switch>
