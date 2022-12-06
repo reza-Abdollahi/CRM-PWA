@@ -64,7 +64,7 @@
     "espree": "^5.0.1",
     "eventsource-polyfill": "0.9.6",
     "expect": "^24.8.0",
-    "express": "4.13.4",
+    "express": "4.17.3",
     "file-loader": "^4.0.0",
     "http-proxy-middleware": "^0.19.1",
     "jsdom": "^15.1.1",
